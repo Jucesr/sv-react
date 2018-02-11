@@ -1,0 +1,39 @@
+{
+  "name": "sv-hermosillo",
+  "version": "1.0.0",
+  "description": "A version of SV software made with React",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "npx babel src/index.js --watch --out-file public/bundle.js",
+    "server": "live-server public",
+    "build": "webpack -p --env production",
+    "build-dev": "webpack",
+    "dev-server": "webpack-dev-server"
+  },
+  "author": "Julio Ojeda",
+  "license": "MIT",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.9",
+    "formik": "^0.11.4",
+    "react": "^16.2.0",
+    "react-dates": "^16.2.1",
+    "react-dom": "^16.2.0",
+    "react-router": "^4.2.0",
+    "react-select": "^1.2.1",
+    "webpack": "^3.10.0",
+    "yup": "^0.24.0"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.0",
+    "webpack-bundle-analyzer": "^2.10.0",
+    "webpack-dev-server": "^2.11.1"
+  }
+}

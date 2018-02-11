@@ -1,0 +1,117 @@
+*{
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body{
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 16px
+}
+
+
+.DateRangePickerInput{
+  width: calc(100% + 10px);
+}
+
+.DateInput{
+  width: 132px !important;
+}
+
+.DateInput_input{
+  padding: 5px !important;
+  font-size: 16px !important;
+}
+
+/*********** FormPAP ***********/
+
+.form_field{
+  display: flex;
+  margin: 10px 0;
+}
+
+.form_field p {
+  color: red;
+  margin: 0;
+  padding-left: 10px;
+  font-weight: 400;
+}
+
+.form_PAP div label {
+  min-width: 200px;
+}
+
+.field_input {
+  min-width: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 0;
+}
+
+.form_field__select{
+  width: 300px;
+}
+
+
+/*********** SideBar ***********/
+
+.sidebar{
+  background-color: #254467;
+  color: white;
+  height: 100vh;
+}
+
+.sidebar_container{
+  width: 90%;
+  /* padding: 0 10px; */
+}
+
+.user_info{
+
+  border-top: 1px solid #1c334d;
+  border-bottom: 1px solid #1c334d;
+  display: inline-flex;
+  /* width: auto; */
+  padding: 20px 10px;
+  background-color: #213c5c;
+}
+
+.user_info_data{
+
+  padding-left: 10px;
+}
+
+.user_info_data h3{
+  margin: 0;
+  margin-bottom: 2px;
+}
+
+.user_info_data span{
+  font-size: 12px;
+  color: rgb(193, 193, 193);
+  display: block;
+}
+
+/*********** Header ***********/
+.header{
+  min-height: 55.5px;
+  border-bottom: 1px solid rgb(173, 173, 173);
+}
+.header h1{
+  margin: 0;
+}
+
+/*********** App ***********/
+
+.app_container{
+  display: flex;
+}
+
+.app_content{
+  width: 100%;
+}
+
+.margin_container{
+  width: 95%;
+  margin: auto;
+}
