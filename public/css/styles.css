@@ -59,6 +59,7 @@ body{
   background-color: #254467;
   color: white;
   height: 100vh;
+  max-width: 20vw;
 }
 
 .sidebar_container{
@@ -101,6 +102,62 @@ body{
   margin: 0;
 }
 
+/*********** PapProjectsPage ***********/
+
+.table_wrapper{
+  margin-top: 10px;
+}
+
+/*********** ViewerTable ***********/
+
+.ViewerTable__wrapper{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.ViewerTable__settings{
+  display: flex;
+  justify-content: space-between;
+  /* text-align: right; */
+}
+
+.ViewerTable__modal{
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  overflow-y:scroll
+  /* scroll-behavior: smooth; */
+}
+
+.ViewerTable__modal_content{
+  position: relative;
+  width: 80%;
+  height: 80%;
+  margin: 1rem auto;
+  background: white;
+  display: flex;
+
+}
+
+.ViewerTable__modal_active_cell{
+  align-items: center;
+  text-align: center;
+}
+
+.ViewerTable__modal_table{
+  overflow-y: scroll;
+  height: 100%;
+  flex-grow: 3;
+}
+
+.ViewerTable__modal_buttons{
+  display: flex;
+  flex-direction: column;
+  padding: .5rem;
+}
+
 /*********** App ***********/
 
 .app_container{
@@ -108,7 +165,8 @@ body{
 }
 
 .app_content{
-  width: 100%;
+  /* width: 100%; */
+  min-width: 80vw;
 }
 
 .margin_container{
