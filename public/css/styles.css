@@ -58,12 +58,15 @@ body{
 .sidebar{
   background-color: #254467;
   color: white;
+  position: fixed;
   height: 100vh;
   max-width: 20vw;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar_container{
-  width: 90%;
+  /* width: 90%; */
   /* padding: 0 10px; */
 }
 
@@ -93,6 +96,27 @@ body{
   display: block;
 }
 
+.sidebar__items{
+  display: flex;
+  flex-direction: column;
+  /* padding: .5rem; */
+  padding-right: 0;
+  width: 100%;
+}
+
+.sidebar__items_item{
+ text-decoration: none;
+ color: #e65a28;
+ padding: .5rem 0;
+ padding-left: .5rem;
+ border-bottom: 1px solid #1c334d;
+}
+
+.sidebar__items_item:hover{
+  background: #182a40;
+  color: #d05123;
+}
+
 /*********** Header ***********/
 .header{
   min-height: 55.5px;
@@ -119,6 +143,7 @@ body{
 .ViewerTable__settings{
   display: flex;
   justify-content: space-between;
+  padding-bottom: 1rem;
   /* text-align: right; */
 }
 
@@ -127,7 +152,9 @@ body{
   background: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: 100%;
-  overflow-y:scroll
+  overflow-y:scroll;
+  z-index:100000;
+
   /* scroll-behavior: smooth; */
 }
 
@@ -144,6 +171,7 @@ body{
 .ViewerTable__modal_active_cell{
   align-items: center;
   text-align: center;
+  cursor: pointer;
 }
 
 .ViewerTable__modal_table{
@@ -167,6 +195,7 @@ body{
 .app_content{
   /* width: 100%; */
   min-width: 80vw;
+  margin-left: 15vw;
 }
 
 .margin_container{

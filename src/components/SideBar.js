@@ -1,8 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const SideBar = () => (
   <div className="sidebar">
-    <div className="sidebar_container">
 
       <div>
         <img width={200} src="/img/logoherrmosillo.png"></img>
@@ -20,10 +20,12 @@ export const SideBar = () => (
 
       </div>
 
-      <div className="side_container">
-        <h2></h2>
+      <div className="sidebar__items">
+
+          <Link className="sidebar__items_item" to="/">Home</Link>
+          <Link className="sidebar__items_item" to="/form">PAP</Link>
+
       </div>
-    </div>
 
   </div>
 )

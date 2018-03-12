@@ -51,61 +51,56 @@ export const projects = [{
     division: 'mxl',
     ingreso_presupuestado: '50000000',
     presupuesto_usd: '1000000',
-    presupuesto_mxn: '30000000',
-    ...rest
+    presupuesto_mxn: '30000000'
   },{
     proyecto: 'R-MXL-051',
     descripcion: 'Fevisa',
     division: 'mxl',
     ingreso_presupuestado: '10000000',
     presupuesto_usd: '250000',
-    presupuesto_mxn: '5000000',
-    ...rest
+    presupuesto_mxn: '5000000'
   },{
     proyecto: 'R-MXL-052',
     descripcion: 'Packaging',
     division: 'mxl',
     ingreso_presupuestado: '5040800',
     presupuesto_usd: '250000',
-    presupuesto_mxn: '5000000',
-    ...rest
+    presupuesto_mxn: '5000000'
   },{
     proyecto: 'R-MXL-053',
     descripcion: 'Code block',
     division: 'mxl',
     ingreso_presupuestado: '940051800',
     presupuesto_usd: '250000',
-    presupuesto_mxn: '5000000',
-    ...rest
+    presupuesto_mxn: '5000000'
   },{
     proyecto: 'R-MTY-050',
     descripcion: 'Kohler',
     division: 'mty',
     ingreso_presupuestado: '1000000',
     presupuesto_usd: '1000',
-    presupuesto_mxn: '800000',
-    ...rest
+    presupuesto_mxn: '800000'
 }]
 
 export const test_data = [{
-  proyecto: 'R-MXL-050',
-  descripcion: 'Venus',
-  division: 'mxl',
-},{
-  proyecto: 'R-MXL-051',
-  descripcion: 'Fevisa',
-  division: 'mxl',
-},{
-  proyecto: 'R-MXL-052',
-  descripcion: 'Packaging',
-  division: 'mxl',
-}]
+    proyecto: 'R-MXL-050',
+    descripcion: 'Venus',
+    division: 'mxl',
+  },{
+    proyecto: 'R-MXL-051',
+    descripcion: 'Fevisa',
+    division: 'mxl',
+  },{
+    proyecto: 'R-MXL-052',
+    descripcion: 'Packaging',
+    division: 'mxl',
+  }]
 
 const makeHeaders = headers => {
   return headers.map(h => ({
     Header: h,
     accessor: h.toLowerCase().replaceAll(" ", "_"),
-    //width: h.length * 10,
+    width_value: h.length * 10,
     Cell: row => {
       return !isNaN(row.value) ? (
         parseFloat(row.value).format(2,3,',','.')
@@ -114,6 +109,18 @@ const makeHeaders = headers => {
     //Cell: row => (<strong>{row.value}</strong>)
   }));
 };
+
+export const makeRows = n => {
+  let rows = [];
+  for (var i = 0; i < n; i++) {
+    rows.push({
+      ...projects[Math.floor((Math.random() * 4) )],
+      ...rest
+    });
+  }
+
+  return rows;
+}
 
 export const headers = makeHeaders([
   'Proyecto',

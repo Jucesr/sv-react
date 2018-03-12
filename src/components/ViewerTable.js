@@ -8,7 +8,8 @@ export default class ViewerTable extends React.Component {
   constructor(props){
     super(props);
 
-    let columns =  this.props.columns.clone();
+    //Make sure all columns have visible prop
+    let columns =  this.addVisibleProperty(this.props.columns.clone());
 
     this.state = {
       views: [{
@@ -16,15 +17,26 @@ export default class ViewerTable extends React.Component {
         label: 'Default',
         data: columns
       }],
-      current_value: 0,
+      current_view: 0,
       current_columns: columns,
-      settings_visible: false
+      settings_visible: false,
     }
+
+    this.settings = {};
+  }
+
+  addVisibleProperty = (oldColumns) => {
+    return oldColumns.map(col => {
+      if(col.visible == undefined){
+        col.visible = true
+      }
+      return col;
+    });
   }
 
   onViewChange = (newValue) => {
     this.setState(() => ({
-      current_value: newValue.value,
+      current_view: newValue.value,
       current_columns: newValue.data
     }))
   };
@@ -33,7 +45,7 @@ export default class ViewerTable extends React.Component {
 
     this.setState((prevState) => ({
       views: prevState.views.map(view => {
-        if(view.value == this.state.current_value){
+        if(view.value == this.state.current_view){
           view.data = this.state.current_columns.clone();
         }
         return view;
@@ -47,7 +59,7 @@ export default class ViewerTable extends React.Component {
       views: prevState.views.concat({
         value: prevState.views.length ,
         label: `New ${prevState.views.length }`,
-        data: this.props.columns.clone()
+        data: this.addVisibleProperty(this.props.columns.clone())
       })
     }));
   }
@@ -64,6 +76,23 @@ export default class ViewerTable extends React.Component {
     }));
   }
 
+  updateSettings = () => {
+    if(this.settings){
+      let new_columns = this.state.current_columns.map( col => {
+        if(col.Header in this.settings){
+            col.visible = this.settings[col.Header];
+        }
+        return col;
+      });
+
+      this.setState(() => ({
+        current_columns: new_columns,
+        settings_visible: false
+      }));
+
+      this.settings = [];
+    }
+  }
 
   reOrderColumns = (obj) => {
 
@@ -79,22 +108,8 @@ export default class ViewerTable extends React.Component {
     });
   }
 
-  onExpandColumn = (columns) => {
-    let target_column = columns[0];
-    let cols = this.state.current_columns;
-
-    let c = cols.map( (col) => {
-      if(col.accessor == target_column.id){
-        col.width = target_column.value;
-      }
-      return col;
-    });
-
-    // this.setState(() => ({
-    //   current_columns: c
-    // }));
-
-    //console.log(columns[0]);
+  getVisibleColumns = (columns) => {
+    return columns.filter(c => c.visible);
   }
 
   getTheadThProps = (state, rowInfo, column) => {
@@ -106,37 +121,40 @@ export default class ViewerTable extends React.Component {
     }
   }
 
-  render(){
-    const {views, current_value} = this.state;
+  onCheckboxChange = (e) => {
+    let text = e.target.textContent;
+    if(text != 'X'){
+      this.settings[e.target.id] = false;
+      e.target.textContent = 'X';
+    }else{
+      e.target.textContent = '✓';
+      this.settings[e.target.id] = true;
+    }
 
-    const config_row =[{
-      name: 'Proyecto',
-      active: true
-    },{
-      name: 'Descripcion',
-      active: true
-    },{
-      name: 'Mascara',
-      active: false
-    },{
-      name: 'Proyecto',
-      active: true
-    },{
-      name: 'Descripcion',
-      active: true
-    },{
-      name: 'Mascara',
-      active: false
-    },{
-      name: 'Proyecto',
-      active: true
-    },{
-      name: 'Descripcion',
-      active: true
-    },{
-      name: 'Mascara',
-      active: false
-    }];
+  }
+
+  onResizedChange = (resized) => {
+    let columns = this.state.current_columns;
+    let column_residez = resized.pop();
+    columns = columns.map( col => {
+      if(col.accessor == column_residez.id){
+        col.width_value = column_residez.value;
+      }
+
+      return col;
+    });
+
+
+    this.setState((prevState) => {
+      return {
+        current_columns: columns
+      }
+    });
+  }
+
+  render(){
+    const {views, current_view} = this.state;
+    const visible_columns = this.getVisibleColumns(this.state.current_columns);
 
     return (
       <div className="ViewerTable__wrapper">
@@ -145,7 +163,7 @@ export default class ViewerTable extends React.Component {
           <div>
             <Select
               className="form_field__select"
-              value={current_value}
+              value={current_view}
               placeholder=""
               options={views}
               onChange={this.onViewChange}
@@ -162,9 +180,13 @@ export default class ViewerTable extends React.Component {
         </div>
         <DraggableTable
           {...this.props}
-          columns={this.state.current_columns}
+          columns={visible_columns}
           reOrderColumns={this.reOrderColumns}
-          onResizedChange={this.onExpandColumn}
+          resized={visible_columns.map( col =>({
+            id: col.accessor,
+            value: col.width_value
+          }))}
+          onResizedChange={this.onResizedChange}
           // getTheadThProps={this.getTheadThProps}
         />
 
@@ -174,28 +196,33 @@ export default class ViewerTable extends React.Component {
               <ReactTable
                 {...this.props}
                 columns={[{
-                  Header: 'Name',
+                  Header: 'Column',
                   accessor: 'name'
 
                 },{
-                  Header: 'Active',
-                  accessor: 'active',
+                  Header: 'Visible',
+                  accessor: 'visible',
                   Cell: row => (
-                    <div className="ViewerTable__modal_active_cell">
-                      <input type="checkbox" defaultChecked={row.value}/>
+                    <div className="ViewerTable__modal_active_cell" id={row.row.name} onClick={this.onCheckboxChange}>
+                      {row.value ? '✓' : 'X'}
                     </div>
-
                   )
 
                 }]}
-                data={config_row}
-                defaultPageSize={config_row.length}
+                data={this.state.current_columns.map( col => {
+                  return {
+                    'name': col.Header,
+                    'visible': col.visible
+                  }
+                })}
+                defaultPageSize={this.state.current_columns.length}
                 showPagination={false}
+
               />
             </div>
 
             <div className="ViewerTable__modal_buttons">
-              <button>OK</button>
+              <button onClick={this.updateSettings}>OK</button>
               <button onClick={this.closeSettings} >Cancel</button>
             </div>
 

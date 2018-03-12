@@ -1,9 +1,13 @@
 import React from 'react';
 
-export const Header = () => (
+export const Header = (props) => (
+
   <div className="header">
+    {true && console.log(props)}
     <div className="margin_container">
-      <h1>PAP (HYAA)</h1>
+      <h1>{props.title ? props.title : 'No title'}</h1>
+      {/* <img width={40} src="/img/nav_back.png"></img>
+      <button onClick={() => props.history.goBack()}>Back</button> */}
     </div>
 
   </div>

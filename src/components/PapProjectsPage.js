@@ -1,6 +1,8 @@
 import React from 'react';
 import ViewerTable from './ViewerTable';
-import {projects, headers, head_test, test_data} from '../data/projects';
+import {projects, headers, head_test, test_data, makeRows} from '../data/projects';
+
+const rows = makeRows(200);
 
 export const PapProjectsPage = () => {
 
@@ -8,11 +10,11 @@ export const PapProjectsPage = () => {
     <div className="margin_container">
       <div className="table_wrapper">
         <ViewerTable
-          columns={head_test.clone()}
-          rows={test_data.clone()}
-          defaultPageSize={5}
+          columns={headers}
+          rows={rows}
+          defaultPageSize={rows.length}
+          showPagination={false}
           className="-striped -highlight"
-          showPagination={true}
           id={1}
         />
 
