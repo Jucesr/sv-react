@@ -18,8 +18,9 @@ export default class ViewerTable extends React.Component {
         data: columns
       }],
       current_view: 0,
-      current_columns: columns,
-      settings_visible: false,
+      current_columns: columns.clone(),
+      ui_toggle_columns: false,
+      ui_view_name: false
     }
 
     this.settings = {};
@@ -42,15 +43,34 @@ export default class ViewerTable extends React.Component {
   };
 
   saveView = (e) => {
+    e.preventDefault();
+    const view_name = e.target.view_name.value.trim()
 
-    this.setState((prevState) => ({
-      views: prevState.views.map(view => {
-        if(view.value == this.state.current_view){
-          view.data = this.state.current_columns.clone();
-        }
-        return view;
-      })
-    }), alert('View saved'))
+    if(view_name.length > 0){
+      this.setState((prevState) => ({
+        views: prevState.views.map(view => {
+          if(view.value == this.state.current_view){
+            view.data = this.state.current_columns.clone();
+            view.label = view_name;
+          }
+          return view;
+        }),
+        ui_view_name: false
+      }))
+    }else{
+      alert('Invalid name');
+    }
+
+  }
+
+  openSaveSettings = (e) => {
+
+    this.setState( () => ({
+      ui_view_name: true
+    }), () => {
+      this.view_name.value = this.state.views[this.state.current_view].label;
+      this.view_name.focus()
+    });
   }
 
   newView = (e) => {
@@ -66,13 +86,14 @@ export default class ViewerTable extends React.Component {
 
   openSettings = () => {
     this.setState( () => ({
-      settings_visible: true
+      ui_toggle_columns: true
     }));
   }
 
   closeSettings = () => {
     this.setState( () => ({
-      settings_visible: false
+      ui_toggle_columns: false,
+      ui_view_name: false
     }));
   }
 
@@ -87,7 +108,7 @@ export default class ViewerTable extends React.Component {
 
       this.setState(() => ({
         current_columns: new_columns,
-        settings_visible: false
+        ui_toggle_columns: false
       }));
 
       this.settings = [];
@@ -174,7 +195,7 @@ export default class ViewerTable extends React.Component {
 
           <div>
             <button onClick={this.newView}>New</button>
-            <button onClick={this.saveView}>Save</button>
+            <button onClick={this.openSaveSettings}>Save</button>
             <button onClick={this.openSettings}>Settings</button>
           </div>
         </div>
@@ -190,7 +211,7 @@ export default class ViewerTable extends React.Component {
           // getTheadThProps={this.getTheadThProps}
         />
 
-        {this.state.settings_visible && <div className="ViewerTable__modal">
+        {this.state.ui_toggle_columns && <div className="ViewerTable__modal">
           <div className="ViewerTable__modal_content">
             <div className="ViewerTable__modal_table">
               <ReactTable
@@ -228,6 +249,24 @@ export default class ViewerTable extends React.Component {
 
           </div>
         </div>}
+
+        {this.state.ui_view_name &&
+          <div className="ViewerTable__modal">
+            <div className="ViewerTable__modal_input">
+
+              <form onSubmit={this.saveView}>
+                <input id="view_name" name="view_name" type="text" placeholder="View name..." ref={(input) => this.view_name = input} />
+
+                <div className="ViewerTable__modal_input_buttons">
+                  <button >Save</button>
+                  <button onClick={this.closeSettings} >Cancel</button>
+                </div>
+              </form>
+
+
+            </div>
+          </div>
+        }
 
       </div>
     )

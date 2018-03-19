@@ -2,7 +2,7 @@ import React from 'react';
 import ViewerTable from './ViewerTable';
 import {projects, headers, head_test, test_data, makeRows} from '../data/projects';
 
-const rows = makeRows(200);
+const rows = makeRows(40);
 
 export const PapProjectsPage = () => {
 

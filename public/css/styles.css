@@ -168,6 +168,8 @@ body{
 
 }
 
+
+
 .ViewerTable__modal_active_cell{
   align-items: center;
   text-align: center;
@@ -184,6 +186,29 @@ body{
   display: flex;
   flex-direction: column;
   padding: .5rem;
+}
+
+.ViewerTable__modal_input{
+  position: relative;
+  width: 40%;
+  margin: 1rem auto;
+  padding: 1rem;
+  background: rgb(238, 238, 238);
+  text-align: center;
+  border-radius: .5rem;
+
+}
+
+.ViewerTable__modal_input input{
+  padding: .2rem .5rem;
+  width: 100%;
+  border: 1px solid rgb(194, 194, 194);
+  border-radius: .5rem;
+}
+
+
+.ViewerTable__modal_input_buttons{
+  margin-top: 1rem;
 }
 
 /*********** App ***********/
