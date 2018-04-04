@@ -62,7 +62,7 @@ class DraggableTable extends Component {
       ...col,
       Header: <span className={`draggable-header${this.props.id}`}>{col.Header}</span>,
     }));
-    //console.log(cols);
+    // console.log(cols);
     //render
     return (
       <div className="esr-table">

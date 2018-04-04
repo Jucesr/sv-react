@@ -156,12 +156,24 @@ export default class ViewerTable extends React.Component {
 
   onResizedChange = (resized) => {
     let columns = this.state.current_columns;
-    let column_residez = resized.pop();
-    columns = columns.map( col => {
-      if(col.accessor == column_residez.id){
-        col.width_value = column_residez.value;
-      }
 
+    let column_residez = resized.pop();
+    // console.log(column_residez);
+    columns = columns.map( col => {
+
+      if(col.columns){
+
+        col.columns = col.columns.map( c => {
+          if(c.accessor == column_residez.id){
+            c.width_value = column_residez.value;
+          }
+          return c;
+        })
+      }else{
+        if(col.accessor == column_residez.id){
+          col.width_value = column_residez.value;
+        }
+      }
       return col;
     });
 
@@ -176,6 +188,26 @@ export default class ViewerTable extends React.Component {
   render(){
     const {views, current_view} = this.state;
     const visible_columns = this.getVisibleColumns(this.state.current_columns);
+    let resized_columns = [];
+
+    visible_columns.map( col =>{
+      if(col.columns){
+        return col.columns.map( c => {
+
+          resized_columns.push({
+            id: c.accessor,
+            value: c.width_value
+          });
+        })
+      }else{
+        //Normal column
+        resized_columns.push({
+          id: col.accessor ,
+          value: col.width_value
+        })
+      }
+    })
+      // console.log(resized_columns);
 
     return (
       <div className="ViewerTable__wrapper">
@@ -203,10 +235,7 @@ export default class ViewerTable extends React.Component {
           {...this.props}
           columns={visible_columns}
           reOrderColumns={this.reOrderColumns}
-          resized={visible_columns.map( col =>({
-            id: col.accessor,
-            value: col.width_value
-          }))}
+          resized={resized_columns}
           onResizedChange={this.onResizedChange}
           // getTheadThProps={this.getTheadThProps}
         />

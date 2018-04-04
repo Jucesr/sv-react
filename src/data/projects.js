@@ -99,7 +99,7 @@ export const test_data = [{
 const makeHeaders = headers => {
   return headers.map(h => ({
     Header: h,
-    accessor: h.toLowerCase().replaceAll(" ", "_"),
+    accessor:  h,//h.toLowerCase().replaceAll(" ", "_"),
     width_value: h.length * 10,
     Cell: row => {
       return !isNaN(row.value) ? (
@@ -204,4 +204,20 @@ export const head_test = makeHeaders([
   'Proyecto',
   'Descripcion',
   'Division'
+]);
+
+export const head_pap = makeHeaders([
+  'PSPNR',
+  'PSPID',
+  'POST1',
+  'PPTOBASEMXN',
+  'PPTOBASEUSD',
+  'PPTOORCAMXN',
+  'PPTOORCAUSD',
+  'PPTOCTRLMXN',
+  'PPTOCTRLUSD',
+  'COSTCOMPMXN',
+  'COSTCOMPUSD',
+  'COSTREALMXN',
+  'COSTREALUSD'
 ]);

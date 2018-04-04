@@ -5,7 +5,7 @@
 
 body{
   font-family: 'Source Sans Pro', sans-serif;
-  font-size: 16px
+  font-size: 12px
 }
 
 
@@ -133,6 +133,35 @@ body{
 }
 
 /*********** ViewerTable ***********/
+
+.header_table{
+  color: white;
+}
+
+.header_table_white{
+  color: black;
+}
+
+.header_table_blue{
+  background: #445f70;
+}
+
+.header_table_gray{
+  background: #6a768a;
+}
+
+.header_table_aqua{
+  background: #56a997;
+}
+
+.header_table_green{
+  background: #9fa96f;
+}
+
+.header_table_green2{
+  background: #74918c;
+}
+
 
 .ViewerTable__wrapper{
   display: flex;

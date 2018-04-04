@@ -24,6 +24,7 @@ export const SideBar = () => (
 
           <Link className="sidebar__items_item" to="/">Home</Link>
           <Link className="sidebar__items_item" to="/form">PAP</Link>
+          <Link className="sidebar__items_item" to="/projects">Projects</Link>
 
       </div>
 

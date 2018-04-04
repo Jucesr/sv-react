@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import {PapFormPage} from '../components/PapFormPage';
+import PapFormPage from '../components/PapFormPage';
 import {PapProjectsPage} from '../components/PapProjectsPage';
 import {HomePage} from '../components/HomePage'
 

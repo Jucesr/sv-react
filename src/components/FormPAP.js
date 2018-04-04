@@ -44,20 +44,20 @@ const FormPAP = ({
       value: 1800,
       label: 1800
   }];
-  const reg = /^[A-Za-z]-[A-Za-z]{3}-[0-9]{3}(\D|$)/;
+  const reg = /^[A-Za-z][/][A-Za-z]{3}[/][0-9]{3}(\D|$)/;
 
   const onProjectosChange = (value) => {
     const options = value.map( v => v.label);
     const new_option = options[options.length - 1];
-
-    if(reg.test(new_option)){
+    // console.log(options);
+    if(reg.test(new_option) || new_option == null){
       setFieldValue('proyectos', value);
       setErrors({
         proyectos: null
       });
     }else{
       setErrors({
-        proyectos: 'La mascara debe ser tipo (R-MXL-000)'
+        proyectos: 'La mascara debe ser tipo (R/MXL/000)'
       });
     }
 	}
@@ -95,7 +95,7 @@ const FormPAP = ({
           className="form_field__select"
 				/>
 
-        { errors.proyectos && touched.proyectos && <p>{errors.proyectos}</p>}
+        { errors.proyectos && <p>{errors.proyectos}</p>}
       </div>
       <div className="form_field">
         <label>Descripción</label>
@@ -136,7 +136,10 @@ const FormPAP = ({
           promptTextCreator={() => ''}
           arrowRenderer={null}
           className="form_field__select"
+          clearable={true}
 				/>
+
+        { errors.divisiones && <p>{errors.divisiones}</p>}
       </div>
 
       <div className="form_field">
@@ -186,12 +189,13 @@ export default withFormik({
       divisiones: divisiones || [],
       fecha_inicial: fecha_inicial || moment(),
       fecha_final: fecha_final || moment(1000),
-      focus_fecha: 'startDate',
+      focus_fecha: null,
       nocturno: false
     }
   },
   validationSchema: Yup.object().shape({
-    proyectos: Yup.array().min(1, 'Debes ingresar al menos un proyecto')
+    proyectos: Yup.array().min(1, 'Debes ingresar al menos un proyecto'),
+    divisiones: Yup.array().min(1, 'Debes ingresar al menos una division')
   }),
   handleSubmit(values, {props, resetForm, setErrors, setSubmitting}) {
     props.onFired({

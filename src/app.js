@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Clone from 'Clone';
 
 import AppRouter from './routers/AppRouter';
 // import {PapFormPage} from './components/PapFormPage';
@@ -20,7 +21,7 @@ import AppRouter from './routers/AppRouter';
 // );
 
 Array.prototype.clone = function(){
-  return JSON.parse(JSON.stringify(this));
+  return Clone(this);
 }
 
 
