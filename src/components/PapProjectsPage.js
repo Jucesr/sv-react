@@ -5,14 +5,7 @@ import {projects, headers, head_test, test_data, makeRows, head_pap} from '../da
 
 // const rows = makeRows(40);
 
-export const PapProjectsPage = ({isSidebarOpen}) => {
-
-  let rows;
-  if(localStorage.getItem('projects')){
-    rows = JSON.parse(localStorage.getItem('projects'));
-  }else{
-    rows = []
-  }
+export const PapProjectsPage = ({isSidebarOpen, rows}) => {
 
   const mH2 = (Header, columns, headerClassName) => ({
 
@@ -82,7 +75,8 @@ export const PapProjectsPage = ({isSidebarOpen}) => {
 
 
 const mapStateToProps = state => ({
-    isSidebarOpen: state.ui.sidebar_open
+    isSidebarOpen: state.ui.sidebar_open,
+    rows: state.projects.items
 })
 
 export default connect(mapStateToProps )(PapProjectsPage)
