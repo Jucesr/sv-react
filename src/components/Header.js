@@ -1,11 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import {toggleSidebar} from '../actions/ui'
 
-export const Header = (props) => (
+export const Header = ({isSidebarOpen, toggleSidebar}) => (
 
-  <header className="Header">
+  <header className={`Header ${isSidebarOpen ? 'Header__open':'Header__close'}`}>
     <div
         className="Header__menu"
-        onClick={props.toggleSideBar}
+        onClick={toggleSidebar}
         >
         <img width="30px" src="/img/menu.png"></img>
       </div>
@@ -15,3 +17,12 @@ export const Header = (props) => (
 
   </header>
 )
+
+const mapDispatchToProps = dispatch => ({
+  toggleSidebar: () => dispatch(toggleSidebar())
+})
+const mapStateToProps = state => ({
+    isSidebarOpen: state.ui.sidebar_open
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

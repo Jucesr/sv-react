@@ -1,10 +1,11 @@
 import React from 'react';
 import ViewerTable from './ViewerTable';
+import { connect } from 'react-redux'
 import {projects, headers, head_test, test_data, makeRows, head_pap} from '../data/projects';
 
 // const rows = makeRows(40);
 
-export const PapProjectsPage = () => {
+export const PapProjectsPage = ({isSidebarOpen}) => {
 
   let rows;
   if(localStorage.getItem('projects')){
@@ -62,7 +63,7 @@ export const PapProjectsPage = () => {
   ]
 
   return(
-    <div className="margin_container">
+    <div className={isSidebarOpen ? 'Page Page__open': 'Page Page__closed'}>
       <div className="table_wrapper">
         <ViewerTable
           columns={columns}
@@ -78,3 +79,10 @@ export const PapProjectsPage = () => {
     </div>
   )
 }
+
+
+const mapStateToProps = state => ({
+    isSidebarOpen: state.ui.sidebar_open
+})
+
+export default connect(mapStateToProps )(PapProjectsPage)

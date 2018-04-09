@@ -1,6 +1,9 @@
 import React from 'react'
-import FormPAP from './FormPAP'
+import { connect } from 'react-redux'
 import fetch from 'cross-fetch'
+
+import FormPAP from './FormPAP'
+
 
 class PapFormPage extends React.Component {
 
@@ -51,15 +54,6 @@ class PapFormPage extends React.Component {
       }
     ).then(
       data => {
-      //
-      //   data = data.map(d => Object.keys(d).map((key, value) => {
-      //     if(!isNaN(value))
-      //       value = parseFloat(value)
-      //
-      //     return {
-      //         key: value
-      //     }
-      //   }))
 
         data = data.map(d => ({
           ...d,
@@ -74,10 +68,6 @@ class PapFormPage extends React.Component {
         localStorage.setItem("projects", JSON.stringify(data));
         console.log(data);
         this.history.push('/projects')
-        // this.setState(() => ({
-        //   isFetching: false,
-        //   error: false
-        // }), );
 
       }
     ).catch(
@@ -94,15 +84,16 @@ class PapFormPage extends React.Component {
   render(){
     this.history = this.props.history;
     return (
-      <div className="margin_container">
+      <div className={this.props.isSidebarOpen ? 'Page Page__open': 'Page Page__closed'}>
         {this.state.error && <div style={{color: 'red'}}>No se encontraron proyectos con los datos ingresados</div>}
-
         {!this.state.isFetching ? (<FormPAP onFired={this.logValues}/>) : (<img src="/img/loading.gif"></img>)}
-
-
       </div>
     )
   };
 }
 
-export default PapFormPage
+const mapStateToProps = state => ({
+    isSidebarOpen: state.ui.sidebar_open
+})
+
+export default connect(mapStateToProps )(PapFormPage)

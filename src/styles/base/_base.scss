@@ -32,16 +32,6 @@ button:disabled{
 
 /*********** App ***********/
 
-
-.app_content_open{
-  margin-left: $sidebar_width_open;
-  width: calc(100vw - #{$sidebar_width_open});
-}
-.app_content_close{
-  margin-left: 0;
-  width: calc(100vw - #{$sidebar_width_close});
-}
-
 .margin_container{
   width: 95%;
   margin: auto;

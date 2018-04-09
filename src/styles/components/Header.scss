@@ -6,9 +6,17 @@
   color: white;
   top: 0;
   z-index: 1000000;
+  transition: all $sidebar_animation linear;
   height: $header_height;
+}
 
-
+.Header__open{
+  margin-left: $sidebar_width_open;
+  width: calc(100vw - #{$sidebar_width_open});
+}
+.Header__close{
+  margin-left: 0;
+  width: calc(100vw - #{$sidebar_width_close});
 }
 
 

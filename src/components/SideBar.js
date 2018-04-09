@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'
 
-export const SideBar = ({isOpen = true}) => (
-  <div className={`SideBar ${isOpen ? 'SideBar_open': 'SideBar_close'}`}>
+const SideBar = ({isSidebarOpen}) => (
+  <div className={`SideBar ${isSidebarOpen ? 'SideBar_open': 'SideBar_close'}`}>
 
       <div>
         <img width={200} src="/img/logoherrmosillo.png"></img>
@@ -30,3 +31,9 @@ export const SideBar = ({isOpen = true}) => (
 
   </div>
 )
+
+const mapStateToProps = state => ({
+    isSidebarOpen: state.ui.sidebar_open
+})
+
+export default connect(mapStateToProps )(SideBar)

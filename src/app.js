@@ -1,13 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDom from 'react-dom';
 import Clone from 'Clone';
 
 import AppRouter from './routers/AppRouter';
+import { Provider } from 'react-redux'
+import store from './store/store'
 import './styles/index.scss'
 
 Array.prototype.clone = function(){
   return Clone(this);
 }
 
+const App = () => (
+  <Provider store={store}>
+    <AppRouter/>
+  </Provider>
+)
 
-ReactDOM.render(<AppRouter/>, document.getElementById('app'));
+ReactDom.render(<App/>, document.getElementById('app'))
