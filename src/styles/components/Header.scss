@@ -1,0 +1,25 @@
+.Header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: $color_03;
+  color: white;
+  top: 0;
+  z-index: 1000000;
+  height: $header_height;
+
+
+}
+
+
+.Header__menu {
+  padding: calc((#{$header_height}  - #{$header_menu_button_height}) /2) 1rem;
+  &:hover{
+    background: lighten($color_02, 10%);
+    cursor: pointer;
+  }
+}
+
+.Header__menu img{
+  height: $header_menu_button_height;
+}

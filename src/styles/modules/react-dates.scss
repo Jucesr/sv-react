@@ -840,3 +840,17 @@
   stroke: #dbdbdb;
   fill: transparent
 }
+
+
+.DateRangePickerInput{
+  width: calc(100% + 10px);
+}
+
+.DateInput{
+  width: 132px !important;
+}
+
+.DateInput_input{
+  padding: 5px !important;
+  font-size: 16px !important;
+}

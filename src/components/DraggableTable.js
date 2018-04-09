@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import ReactTable, { ReactTableDefaults } from "react-table";
 
-import "react-table/react-table.css";
-
 class DraggableTable extends Component {
   constructor(props) {
     super(props);

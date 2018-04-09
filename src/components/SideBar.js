@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export const SideBar = () => (
-  <div className="sidebar">
+export const SideBar = ({isOpen = true}) => (
+  <div className={`SideBar ${isOpen ? 'SideBar_open': 'SideBar_close'}`}>
 
       <div>
         <img width={200} src="/img/logoherrmosillo.png"></img>
