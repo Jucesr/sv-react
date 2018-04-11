@@ -9,24 +9,23 @@ class DraggableTable extends Component {
   }
   mountEvents() {
     const headers = Array.prototype.slice.call(
-      // document.querySelectorAll(".rt-th")
-      document.querySelectorAll(`.draggable-header${this.props.id}`)
+      document.querySelectorAll(`.DraggableTable${this.props.id}`)
 
     );
-
     headers.forEach((header, i) => {
+      let element_id = parseInt(header.getAttribute('dgid'))
       header.setAttribute("draggable", true);
       //the dragged header
       header.ondragstart = e => {
         e.stopPropagation();
-        this.dragged = i;
+        this.dragged = element_id;
       };
 
       header.ondrag = e => e.stopPropagation;
 
       header.ondragend = e => {
         e.stopPropagation();
-        setTimeout(() => (this.dragged = null), 1000);
+        setTimeout(() => (this.dragged = null), 500);
       };
 
       //the dropped header
@@ -37,7 +36,7 @@ class DraggableTable extends Component {
       header.ondrop = e => {
         e.preventDefault();
         const { target, dataTransfer } = e;
-        this.props.reOrderColumns({ a: i, b: this.dragged })
+        this.props.reOrderColumns({ from: this.dragged, to: element_id })
       };
     });
   }
@@ -56,16 +55,14 @@ class DraggableTable extends Component {
 
     let columns = this.props.columns.clone();
 
-    const cols = columns.map(col => ({
+    const cols = columns.map((col, i ) => ({
       ...col,
-      Header: <span className={`draggable-header${this.props.id}`}>{col.Header}</span>,
-    }));
-    // console.log(cols);
+      Header: <span dgid={i} className={`DraggableTable${this.props.id}`}>{col.Header}</span>,
+    }))
+
     //render
     return (
-      <div className="esr-table">
         <ReactTable {...this.props} data={rows} columns={cols} />
-      </div>
     );
   }
 }

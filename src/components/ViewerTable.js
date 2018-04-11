@@ -123,7 +123,7 @@ class ViewerTable extends React.Component {
     let reorder = [];
     let cols = this.state.current_columns;
     reorder.push(obj);
-    reorder.forEach(o => cols.splice(o.a, 0, cols.splice(o.b, 1)[0]));
+    reorder.forEach(o => cols.splice(o.to, 0, cols.splice(o.from, 1)[0]));
 
     this.setState((prevState) => {
       return {
