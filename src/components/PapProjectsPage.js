@@ -59,6 +59,7 @@ export const PapProjectsPage = ({isSidebarOpen, rows}) => {
     <div className={isSidebarOpen ? 'Page Page__open': 'Page Page__closed'}>
       <div className="table_wrapper">
         <ViewerTable
+          views_id='projects'
           columns={columns}
           rows={rows}
           defaultPageSize={rows.length}

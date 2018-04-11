@@ -2,21 +2,24 @@ import React from 'react';
 import DraggableTable from './DraggableTable';
 import ReactTable from "react-table";
 import Select from 'react-select';
+import { connect } from 'react-redux'
 
-export default class ViewerTable extends React.Component {
+import {addView, saveView} from '../actions/views'
+
+class ViewerTable extends React.Component {
 
   constructor(props){
     super(props);
-
     //Make sure all columns have visible prop
     let columns =  this.addVisibleProperty(this.props.columns.clone());
 
-    this.state = {
-      views: [{
-        value: 0,
-        label: 'Default',
+    if(this.props.views.length <= 0 ){
+      this.props.addView(this.props.views_id, {
+        label: `Default`,
         data: columns
-      }],
+      })
+    }
+    this.state = {
       current_view: 0,
       current_columns: columns.clone(),
       ui_toggle_columns: false,
@@ -37,7 +40,7 @@ export default class ViewerTable extends React.Component {
 
   onViewChange = (newValue) => {
     this.setState(() => ({
-      current_view: newValue.value,
+      current_view: newValue._id,
       current_columns: newValue.data
     }))
   };
@@ -46,15 +49,17 @@ export default class ViewerTable extends React.Component {
     e.preventDefault();
     const view_name = e.target.view_name.value.trim()
 
+
+
     if(view_name.length > 0){
+
+      this.props.saveView(this.props.views_id, {
+        _id: this.state.current_view,
+        label: view_name,
+        data: this.state.current_columns.clone()
+      })
+
       this.setState((prevState) => ({
-        views: prevState.views.map(view => {
-          if(view.value == this.state.current_view){
-            view.data = this.state.current_columns.clone();
-            view.label = view_name;
-          }
-          return view;
-        }),
         ui_view_name: false
       }))
     }else{
@@ -68,20 +73,18 @@ export default class ViewerTable extends React.Component {
     this.setState( () => ({
       ui_view_name: true
     }), () => {
-      this.view_name.value = this.state.views[this.state.current_view].label;
+      this.view_name.value = this.props.views[this.state.current_view].label;
       this.view_name.focus()
     });
   }
 
   newView = (e) => {
 
-    this.setState((prevState) => ({
-      views: prevState.views.concat({
-        value: prevState.views.length ,
-        label: `New ${prevState.views.length }`,
-        data: this.addVisibleProperty(this.props.columns.clone())
-      })
-    }));
+    this.props.addView(this.props.views_id, {
+      label: `New ${this.props.views.length }`,
+      data: this.addVisibleProperty(this.props.columns.clone())
+    })
+
   }
 
   openSettings = () => {
@@ -186,7 +189,11 @@ export default class ViewerTable extends React.Component {
   }
 
   render(){
-    const {views, current_view} = this.state;
+    const views = this.props.views.map(view => ({
+      ...view,
+      value: view._id
+    }))
+    const {current_view} = this.state;
     const visible_columns = this.getVisibleColumns(this.state.current_columns);
     let resized_columns = [];
 
@@ -302,3 +309,13 @@ export default class ViewerTable extends React.Component {
   };
 
 }
+
+const mapStateToProps = (state, {views_id}) => ({
+    views: state.views[views_id] || []
+})
+const mapDispatchToProps = dispatch => ({
+    addView: (table_id, view) => dispatch(addView(table_id, view)),
+    saveView: (table_id, view) => dispatch(saveView(table_id, view))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewerTable)

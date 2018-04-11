@@ -10,7 +10,8 @@ export default (state = initialState, action) => {
     case 'REQUEST_PROJECTS':
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
+        error: undefined
       }
     case 'RECEIVE_PROJECTS':
       return {
