@@ -1,47 +1,25 @@
-import React from 'react';
-import ViewerTable from './ViewerTable';
+import React from 'react'
 import { connect } from 'react-redux'
-import {projects, headers, head_test, test_data, makeRows, head_pap} from '../data/projects';
 
-// const rows = makeRows(40);
+import ViewerTable from './ViewerTable'
+import {mH1, mH2, H} from '../helpers'
+import {fetchProjectDetail} from '../actions/project_detail'
 
-export const PapProjectsPage = ({isSidebarOpen, rows}) => {
+const onClickItemTable = (row, history, fetchProjectDetail, error) => {
+  let project = row.PSPID.replaceAll('/ ','')
 
-  const mH2 = (Header, columns, headerClassName) => ({
-
-    Header,
-    headerClassName: `header_table ${headerClassName}`,
-    width_value: Header.length * 30,
-    columns: columns.map(c => ({
-      Header: c.Header,
-      accessor: c.accessor,
-      headerClassName: `header_table ${headerClassName}`,
-      width_value: c.Header.length * 30,
-      Cell: row => {
-        return !isNaN(row.value) ? (
-          `$${parseFloat(row.value).format(2,3,',','.')}`
-        ) : row.value
-        }
-    }))
-  })
-
-  const mH1 = (Header, accessor, headerClassName) => ({
-    Header,
-    accessor,
-    headerClassName: `header_table ${headerClassName}`,
-    width_value: Header.length * 30,
-    Cell: row => {
-      return !isNaN(row.value) ? (
-        `${parseFloat(row.value).format(2,3,',','.')}`
-      ) : row.value
+  fetchProjectDetail(project)
+  .then(
+    () => {
+      if (!error){
+        history.push('/project_item')
       }
-  })
+    }
+  )
+  // history.push('/project_item');
+}
 
-  const H = (Header, accessor) => ({
-    Header,
-    accessor
-
-  })
+export const PapProjectsPage = ({isSidebarOpen, rows, history, fetchProjectDetail, isFetching, error}) => {
 
   let columns = [
     mH1('Item','PSPID','header_table_white'),
@@ -58,15 +36,30 @@ export const PapProjectsPage = ({isSidebarOpen, rows}) => {
   return(
     <div className={isSidebarOpen ? 'Page Page__open': 'Page Page__closed'}>
       <div className="table_wrapper">
-        <ViewerTable
-          views_id='projects'
-          columns={columns}
-          rows={rows}
-          defaultPageSize={rows.length}
-          showPagination={false}
-          className="-striped -highlight"
-          id={1}
-        />
+        {!isFetching ?
+          (
+            <ViewerTable
+              views_id='projects'
+              columns={columns}
+              rows={rows}
+              defaultPageSize={rows.length}
+              showPagination={false}
+              className="-striped -highlight"
+              id={1}
+              getTdProps={(state, rowInfo, column, instance) => {
+                  return {
+                    onClick: (e, handleOriginal) => {
+                      if(rowInfo){
+                        onClickItemTable(rowInfo.original, history, fetchProjectDetail, error);
+                      }
+                      if (handleOriginal) {
+                        handleOriginal()
+                      }
+                    }
+                  }
+                }}
+            />
+          ) : (<img src="/img/loading.gif"></img>)}
 
       </div>
 
@@ -77,7 +70,13 @@ export const PapProjectsPage = ({isSidebarOpen, rows}) => {
 
 const mapStateToProps = state => ({
     isSidebarOpen: state.ui.sidebar_open,
-    rows: state.projects.items
+    rows: state.projects.items,
+    isFetching: state.project_detail.isFetching,
+    error: state.project_detail.error
 })
 
-export default connect(mapStateToProps )(PapProjectsPage)
+const mapDispatchToProps = dispatch => ({
+  fetchProjectDetail: data => dispatch(fetchProjectDetail(data))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps )(PapProjectsPage)

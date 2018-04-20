@@ -12,7 +12,7 @@ class PapFormPage extends React.Component {
   }
 
   onSubmit = (values) => {
-    let proyectos = values.proyectos.map( p => (this.replaceAll(p, '/', '') + "00000000000").toUpperCase());
+    let proyectos = values.proyectos.map( p => (this.replaceAll(p, '/', '')).toUpperCase());
     let divisiones = values.divisiones.map (d => d.toUpperCase());
 
     this.props.fetchProjects({proyectos, divisiones})
