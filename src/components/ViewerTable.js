@@ -5,13 +5,14 @@ import Select from 'react-select';
 import { connect } from 'react-redux'
 
 import {addView, saveView} from '../actions/views'
+import {formatColumn} from '../helpers'
 
 class ViewerTable extends React.Component {
 
   constructor(props){
     super(props);
     //Make sure all columns have visible prop
-    let columns =  this.addVisibleProperty(this.props.columns.clone());
+    let columns =  this.addVisibleProperty(formatColumn(this.props.columns.clone()));
 
     if(this.props.views.length <= 0 ){
       this.props.addView(this.props.views_id, {
@@ -21,7 +22,7 @@ class ViewerTable extends React.Component {
     }
     this.state = {
       current_view: 0,
-      current_columns: columns.clone(),
+      current_columns: columns,
       ui_toggle_columns: false,
       ui_view_name: false
     }
@@ -39,17 +40,18 @@ class ViewerTable extends React.Component {
   }
 
   onViewChange = (newValue) => {
-    this.setState(() => ({
-      current_view: newValue._id,
-      current_columns: newValue.data
-    }))
+    if(newValue._id != this.state.current_view){
+      this.setState(() => ({
+        current_view: newValue._id,
+        current_columns: formatColumn(newValue.data)
+      }))
+    }
+
   };
 
   saveView = (e) => {
     e.preventDefault();
     const view_name = e.target.view_name.value.trim()
-
-
 
     if(view_name.length > 0){
 

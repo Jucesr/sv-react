@@ -22,15 +22,15 @@ const onClickItemTable = (row, history, fetchProjectDetail, error) => {
 export const PapProjectsPage = ({isSidebarOpen, rows, history, fetchProjectDetail, isFetching, error}) => {
 
   let columns = [
-    mH1('Item','PSPID','header_table_white'),
-    mH1('Description','POST1','header_table_white'),
-    mH2('GMP Budget',[H('MXN','PPTOBASEMXN'), H('USD','PPTOBASEUSD')], 'header_table_blue'),
-    mH2('Change Orders',[H('MXN','PPTOORCAMXN'), H('USD','PPTOORCAUSD')], 'header_table_gray'),
-    mH2('GMP Budget + Change Orders',[H('MXN','PPTOBACOMXN'), H('USD','PPTOBACOUSD')], 'header_table_green2'),
-    mH2('Approved Cost of Work',[H('MXN','PPTOCTRLMXN'), H('USD','PPTOCTRLUSD')], 'header_table_aqua'),
-    mH2('Difference',[H('MXN','DIFERENCEMXN'), H('USD','DIFERENCEUSD')], 'header_table_green'),
-    mH2('Owner',[H('MXN','COSTCOMPMXN'), H('USD','COSTCOMPUSD')], 'header_table_green'),
-    mH2('Builder',[H('MXN','COSTREALMXN'), H('USD','COSTREALUSD')], 'header_table_green'),
+    mH1('Item','PSPID','header_table_white', 'text'),
+    mH1('Description','POST1','header_table_white', 'text'),
+    mH2('GMP Budget',[H('MXN','PPTOBASEMXN'), H('USD','PPTOBASEUSD')], 'header_table_blue', 'currency'),
+    mH2('Change Orders',[H('MXN','PPTOORCAMXN'), H('USD','PPTOORCAUSD')], 'header_table_gray', 'currency'),
+    mH2('GMP Budget + Change Orders',[H('MXN','PPTOBACOMXN'), H('USD','PPTOBACOUSD')], 'header_table_green2', 'currency'),
+    mH2('Approved Cost of Work',[H('MXN','PPTOCTRLMXN'), H('USD','PPTOCTRLUSD')], 'header_table_aqua', 'currency'),
+    mH2('Difference',[H('MXN','DIFERENCEMXN'), H('USD','DIFERENCEUSD')], 'header_table_green', 'currency'),
+    mH2('Owner',[H('MXN','COSTCOMPMXN'), H('USD','COSTCOMPUSD')], 'header_table_green', 'currency'),
+    mH2('Builder',[H('MXN','COSTREALMXN'), H('USD','COSTREALUSD')], 'header_table_green', 'currency'),
   ]
 
   return(
