@@ -1,4 +1,5 @@
 const host = 'http://svdev.hyapresenta.com/api_medline/index.php?';
+const TIME_OUT = 15000;
 
 const requestProjects = () => ({
   type: 'REQUEST_PROJECTS'
@@ -18,7 +19,7 @@ export const fetchProjects = ({proyectos, divisiones}) => {
   return dispatch => {
     dispatch(requestProjects())
     const url = `${host}proyectos=${proyectos.toString()}&divisiones=${divisiones.toString()}`
-    return fetchWrapper(url, null, 10000)
+    return fetchWrapper(url, null, TIME_OUT)
       .then(response => response.json())
       .then(data => {
         let items = data.map(d => ({

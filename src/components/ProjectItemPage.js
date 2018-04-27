@@ -22,14 +22,14 @@ export const PapProjectsPage = ({isSidebarOpen, rows, history}) => {
     <div className={isSidebarOpen ? 'Page Page__open': 'Page Page__closed'}>
       <div className="table_wrapper">
         <ViewerTable
-          views_id='projects'
+          views_id='project_detail'
           columns={columns}
           rows={rows}
           defaultPageSize={rows.length}
           showPagination={false}
           className="-striped -highlight"
           id={2}
-          getTdProps={(state, rowInfo, column, instance) => {
+          getTrProps={(state, rowInfo, column, instance) => {
               let rowColor;
 
               if(rowInfo.original.POSID.length == 11)

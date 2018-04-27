@@ -251,7 +251,7 @@ class ViewerTable extends React.Component {
           <div className="ViewerTable__modal_content">
             <div className="ViewerTable__modal_table">
               <ReactTable
-                {...this.props}
+                className={this.props.className}
                 columns={[{
                   Header: 'Column',
                   accessor: 'name'

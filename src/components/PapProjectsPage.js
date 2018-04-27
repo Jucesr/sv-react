@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import ViewerTable from './ViewerTable'
-import {mH1, mH2, H} from '../helpers'
+import {mH1, mH2, H, replaceAll} from '../helpers'
 import {fetchProjectDetail} from '../actions/project_detail'
 
 const onClickItemTable = (row, history, fetchProjectDetail, error) => {
