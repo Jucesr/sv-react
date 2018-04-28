@@ -42,6 +42,30 @@
   /* text-align: right; */
 }
 
+.ViewerTable__settings_buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.ViewerTable__settings_buttons img{
+  padding: 0 .5rem;
+  background: none;
+  height: $table_settings_heigth;
+  display: inline-block;
+  &:hover{
+    background: rgb(204, 204, 204);
+    cursor: pointer;
+  }
+}
+
+.ViewerTable__settings_buttons_export{
+  // margin-right: 2rem;
+  background: rgb(10, 176, 31) !important;
+  color: white;
+  height: $table_settings_heigth;
+  // padding: 0rem 1rem;
+}
+
 .ViewerTable__modal{
   position: absolute;
   background: rgba(0, 0, 0, 0.5);

@@ -24,6 +24,7 @@
     "clone": "^1.0.4",
     "cross-fetch": "^2.1.0",
     "css-loader": "^0.28.9",
+    "file-saver": "^1.3.8",
     "formik": "^0.11.4",
     "react": "^16.2.0",
     "react-dates": "^16.2.1",
@@ -36,6 +37,7 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "webpack": "^3.10.0",
+    "xlsx": "^0.12.11",
     "yup": "^0.24.0"
   },
   "devDependencies": {

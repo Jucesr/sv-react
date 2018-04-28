@@ -3,6 +3,8 @@ import DraggableTable from './DraggableTable';
 import ReactTable from "react-table";
 import Select from 'react-select';
 import { connect } from 'react-redux'
+import XLSX from 'xlsx';
+import {saveAs} from 'file-saver';
 
 import {addView, saveView} from '../actions/views'
 import {formatColumn} from '../helpers'
@@ -22,7 +24,7 @@ class ViewerTable extends React.Component {
     }
     this.state = {
       current_view: 0,
-      current_columns: columns,
+      current_columns: formatColumn(this.props.views[0].data),
       ui_toggle_columns: false,
       ui_view_name: false
     }
@@ -190,6 +192,32 @@ class ViewerTable extends React.Component {
     });
   }
 
+  exportToExcel = () => {
+    let wb = XLSX.utils.book_new();
+    wb.Props = {
+            Title: "SheetJS Tutorial",
+            Subject: "Test",
+            Author: "Red Stapler",
+            CreatedDate: new Date(2017,12,19)
+    };
+
+    wb.SheetNames.push("Test Sheet");
+    var ws_data = this.props.rows;
+    var ws = XLSX.utils.json_to_sheet(ws_data);
+    wb.Sheets["data"] = ws;
+    var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
+    saveAs(new Blob([this.s2ab(wbout)],{type:"application/octet-stream"}), 'table_data.xlsx');
+  }
+
+  s2ab = (s) =>{
+
+    var buf = new ArrayBuffer(s.length);
+    var view = new Uint8Array(buf);
+    for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+
+  }
+
   render(){
     const views = this.props.views.map(view => ({
       ...view,
@@ -234,10 +262,11 @@ class ViewerTable extends React.Component {
             />
           </div>
 
-          <div>
-            <button onClick={this.newView}>New</button>
-            <button onClick={this.openSaveSettings}>Save</button>
-            <button onClick={this.openSettings}>Settings</button>
+          <div className="ViewerTable__settings_buttons">
+            <button className="ViewerTable__settings_buttons_export" onClick={this.exportToExcel}>Export to excel</button>
+            <img onClick={this.newView} src="/img/new.png"></img>
+            <img onClick={this.openSaveSettings} src="/img/save.png"></img>
+            <img onClick={this.openSettings} src="/img/settings.png"></img>
           </div>
         </div>
         <DraggableTable
