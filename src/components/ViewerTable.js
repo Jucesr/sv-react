@@ -201,7 +201,7 @@ class ViewerTable extends React.Component {
             CreatedDate: new Date(2017,12,19)
     };
 
-    wb.SheetNames.push("Test Sheet");
+    wb.SheetNames.push("data");
     var ws_data = this.props.rows;
     var ws = XLSX.utils.json_to_sheet(ws_data);
     wb.Sheets["data"] = ws;

@@ -1,4 +1,5 @@
-const host = 'http://svdev.hyapresenta.com/api_medline/index.php/welcome?';
+//const host = 'http://svdev.hyapresenta.com/api_medline/index.php/welcome?';
+const host = 'http://107.170.241.12/codeIgniter/index.php/welcome?'
 import {reverseString} from '../helpers'
 
 const requestProjects = () => ({
@@ -18,7 +19,7 @@ const errorProjects = (message) => ({
 export const fetchProjectDetail = (proyecto) => {
   return dispatch => {
     dispatch(requestProjects())
-    const url = `${host}proyecto=${proyecto}&format=json&detalle=1`
+    const url = `${host}proyectos=${proyecto}&format=json&detalle=1`
     return fetchWrapper(url, null, 10000)
       .then(response => response.json())
       .then(data => {

@@ -1,4 +1,5 @@
-const host = 'http://svdev.hyapresenta.com/api_medline/index.php?';
+//const host = 'http://svdev.hyapresenta.com/api_medline/index.php?';
+const host = 'http://107.170.241.12/codeIgniter/index.php/welcome?'
 const TIME_OUT = 15000;
 
 const requestProjects = () => ({
